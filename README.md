@@ -2,6 +2,8 @@
 
 A premium cryptocurrency portfolio tracker built with Nuxt 4, featuring real-time prices, historical charts, price alerts, and profit/loss tracking.
 
+**[Live Demo](https://sycamoreq2.vercel.app/)** | **[GitHub Repository](https://github.com/Davidson3556/sycamoreq2)**
+
 ![Nuxt](https://img.shields.io/badge/Nuxt-4.3.0-00DC82?style=flat-square&logo=nuxt.js)
 ![Vue](https://img.shields.io/badge/Vue-3.5-4FC08D?style=flat-square&logo=vue.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript)
@@ -180,6 +182,3 @@ Alert system with browser notifications:
 - **Virtual scrolling**: Consider for large coin lists
 - **Debounced search**: 300ms delay on input
 - **Canvas charts**: Better performance than SVG for real-time
-
-
-

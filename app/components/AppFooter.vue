@@ -94,12 +94,14 @@ const quickLinks = [
 
 const resourceLinks = [
   { href: "https://www.coingecko.com", label: "CoinGecko" },
-  { href: "https://github.com", label: "GitHub" },
+  { href: "https://github.com/Davidson3556/sycamoreq2", label: "GitHub" },
 ];
 
 const socials = [
-  { href: "https://twitter.com", icon: "i-simple-icons-x" },
-  { href: "https://github.com", icon: "i-simple-icons-github" },
-  { href: "https://discord.com", icon: "i-simple-icons-discord" },
+  { href: "https://davidson.vercel.app/", icon: "i-heroicons-globe-alt" },
+  {
+    href: "https://github.com/Davidson3556/sycamoreq2",
+    icon: "i-simple-icons-github",
+  },
 ];
 </script>
