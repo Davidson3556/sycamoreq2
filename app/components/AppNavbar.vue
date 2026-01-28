@@ -25,8 +25,12 @@
             v-for="link in navLinks"
             :key="link.to"
             :to="link.to"
-            class="nav-link"
-            :class="{ 'nav-link-active': $route.path === link.to }"
+            class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+            :class="[
+              $route.path === link.to
+                ? 'text-white bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-500/20'
+                : 'text-gray-400 hover:text-white hover:bg-white/5',
+            ]"
           >
             <UIcon :name="link.icon" class="w-4 h-4" />
             <span>{{ link.label }}</span>
@@ -83,8 +87,12 @@
               v-for="link in navLinks"
               :key="link.to"
               :to="link.to"
-              class="nav-link-mobile"
-              :class="{ 'nav-link-mobile-active': $route.path === link.to }"
+              class="flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all duration-200"
+              :class="[
+                $route.path === link.to
+                  ? 'text-white bg-gradient-to-r from-emerald-500/10 to-cyan-500/10'
+                  : 'text-gray-400 hover:text-white hover:bg-white/5',
+              ]"
               @click="isMobileMenuOpen = false"
             >
               <UIcon :name="link.icon" class="w-5 h-5" />
@@ -123,21 +131,3 @@ watch(
   },
 );
 </script>
-
-<style scoped>
-.nav-link {
-  @apply flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200;
-}
-
-.nav-link-active {
-  @apply text-white bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-500/20;
-}
-
-.nav-link-mobile {
-  @apply flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200;
-}
-
-.nav-link-mobile-active {
-  @apply text-white bg-gradient-to-r from-emerald-500/10 to-cyan-500/10;
-}
-</style>
