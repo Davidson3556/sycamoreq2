@@ -9,109 +9,158 @@ A premium cryptocurrency portfolio tracker built with Nuxt 4, featuring real-tim
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1-06B6D4?style=flat-square&logo=tailwindcss)
 
+---
+
+## Assessment Criteria Coverage
+
+### ✅ Data Fetching from API
+
+- Uses **CoinGecko API** for cryptocurrency market data
+- All API calls proxied through **Nuxt server routes** for security
+- Uses Nuxt's built-in **`$fetch`** for optimized data fetching
+
+### ✅ Loading, Error, and Empty States
+
+- **`LoadingScreen.vue`** - Global loading overlay on initial app load
+- **`LoadingState.vue`** - Inline loading spinner for sections
+- **`ErrorState.vue`** - Error display with retry functionality
+- **`EmptyState.vue`** - Friendly empty state for no data scenarios
+
+### ✅ Code Organization
+
+- Clean separation: `components/`, `composables/`, `stores/`, `pages/`, `server/api/`
+- TypeScript interfaces in `types/index.ts`
+- Reusable composables for shared logic
+
+---
+
 ## Features
 
 - **Real-time Price Updates** - Automatic price refresh every 30 seconds
-- **Historical Charts** - Interactive price charts with multiple time ranges (1D, 7D, 1M, 3M, 1Y, ALL)
+- **Historical Charts** - Interactive price charts with 5 time ranges (1D, 7D, 1M, 3M, 1Y)
 - **Portfolio Management** - Track holdings, calculate profit/loss, and monitor performance
 - **Price Alerts** - Get notified when coins reach your target prices
 - **50+ Cryptocurrencies** - Track major coins from CoinGecko API
-- **Dark Mode** - Premium glassmorphism UI with smooth animations
+- **Dark/Light Mode** - Consistent theming with Tailwind CSS
+
+---
+
+## API Architecture
+
+### External API
+
+**CoinGecko API** (Free Tier) - Cryptocurrency market data provider
+
+### Internal API Routes (Nuxt Server)
+
+| Route                    | Method | Description                        | CoinGecko Endpoint         |
+| ------------------------ | ------ | ---------------------------------- | -------------------------- |
+| `/api/coins`             | GET    | Fetch coin list with market data   | `/coins/markets`           |
+| `/api/coins/:id`         | GET    | Get detailed coin information      | `/coins/{id}`              |
+| `/api/coins/:id/history` | GET    | Get price history for charts       | `/coins/{id}/market_chart` |
+| `/api/coins/prices`      | GET    | Get live prices for multiple coins | `/simple/price`            |
+
+### Why Server-Side API Proxy?
+
+1. **Security** - API key hidden from client-side code
+2. **CORS** - Avoids browser CORS restrictions
+3. **Rate Limiting** - Server-side control over API calls
+4. **Future Caching** - Easy to add response caching
+
+---
+
+## State Handling
+
+### Loading States
+
+```vue
+<!-- Example: Markets page -->
+<LoadingState v-if="coinsStore.loading" message="Loading market data..." />
+<ErrorState
+  v-else-if="coinsStore.error"
+  :message="coinsStore.error"
+  @retry="fetchData"
+/>
+<EmptyState v-else-if="!coins.length" title="No coins found" />
+<CoinList v-else :coins="coins" />
+```
+
+### State Management (Pinia)
+
+| Store          | Purpose                            | Persistence  |
+| -------------- | ---------------------------------- | ------------ |
+| `coins.ts`     | Market data, search, selected coin | Memory only  |
+| `portfolio.ts` | User holdings, P/L calculations    | localStorage |
+| `alerts.ts`    | Price alert configurations         | localStorage |
+
+---
 
 ## Tech Stack
 
-| Layer          | Technology     | Reason                                                         |
-| -------------- | -------------- | -------------------------------------------------------------- |
-| **Framework**  | Nuxt 4         | Latest SSR/SSG features, auto-imports, file-based routing      |
-| **UI**         | @nuxt/ui v4    | Pre-built components, built-in dark mode, Tailwind integration |
-| **State**      | Pinia          | Official Vue state management, TypeScript support, devtools    |
-| **Charts**     | Chart.js       | Lightweight, canvas-based, good performance for real-time data |
-| **Animations** | @vueuse/motion | Vue-native animations, composable API                          |
-| **API**        | CoinGecko      | Free tier, comprehensive crypto data, reliable uptime          |
+| Layer         | Technology        | Reason                                |
+| ------------- | ----------------- | ------------------------------------- |
+| **Framework** | Nuxt 4            | Auto-imports, file-based routing, SSR |
+| **UI**        | @nuxt/ui v4       | Pre-built components, dark mode       |
+| **Styling**   | Tailwind CSS      | Utility-first, `dark:` variants       |
+| **State**     | Pinia             | TypeScript support, simple API        |
+| **Charts**    | Chart.js          | Canvas-based, performant              |
+| **API**       | $fetch (built-in) | Zero bundle size, SSR-ready           |
+
+---
 
 ## Technical Decisions
 
-### Why Nuxt 4?
+### Why `$fetch` over Axios?
 
-- **Auto-imports**: No manual imports for composables, components, or utils
-- **File-based routing**: Automatic route generation from directory structure
-- **Server API routes**: Built-in API layer for proxying external requests
-- **SSR by default**: SEO-friendly with hydration for interactivity
+- **Zero bundle size** - Built into Nuxt
+- **SSR-ready** - Works seamlessly on server and client
+- **Auto baseURL** - Automatic handling of API routes
+- **Native integration** - Works with `useFetch` and `useAsyncData`
 
-### Why Pinia over Vuex?
+### Why Tailwind CSS with `dark:` variants?
 
-- Simpler API with no mutations (just state, getters, actions)
-- First-class TypeScript support
-- Composable store design
-- Built-in devtools integration
+- Simple, consistent theming approach
+- No custom CSS variables needed
+- Easy maintenance and readability
+- Built-in support in @nuxt/ui
 
 ### Why Chart.js?
 
-- Canvas-based rendering for smooth performance
+- Canvas-based for smooth real-time updates
 - Small bundle size (~60KB)
-- Extensive customization options
-- Good documentation and community
+- Extensive customization
+- Good TypeScript support
 
-### API Architecture
-
-Server-side API routes proxy all CoinGecko requests because:
-
-1. **Security**: API key hidden from client
-2. **CORS**: Avoids browser CORS restrictions
-3. **Caching**: Future caching layer possible
-4. **Rate limiting**: Server-side control
-
-### State Persistence Strategy
-
-- Portfolio holdings and price alerts stored in localStorage
-- Loaded on app mount via Pinia actions
-- Reactive updates trigger automatic saves
+---
 
 ## Project Structure
 
 ```
 app/
-├── assets/css/          # Global styles and Tailwind config
+├── assets/css/          # Global styles
 ├── components/          # Vue components
-│   ├── AddHoldingModal.vue
-│   ├── AlertCard.vue
-│   ├── AlertForm.vue
-│   ├── AppFooter.vue
-│   ├── AppNavbar.vue
-│   ├── CoinCard.vue
-│   ├── CoinList.vue
-│   ├── EmptyState.vue
-│   ├── ErrorState.vue
-│   ├── HoldingCard.vue
-│   ├── LoadingScreen.vue
-│   ├── LoadingState.vue
-│   ├── PortfolioSummary.vue
-│   ├── PriceChart.vue
-│   └── SparklineChart.vue
+│   ├── LoadingScreen.vue   # Global loading overlay
+│   ├── LoadingState.vue    # Inline loader
+│   ├── ErrorState.vue      # Error with retry
+│   ├── EmptyState.vue      # Empty data state
+│   ├── PriceChart.vue      # Historical chart
+│   └── ...
 ├── composables/         # Reusable logic
-│   ├── useFormatters.ts # Currency/number formatting
-│   └── usePriceUpdates.ts # Real-time price polling
+│   ├── useFormatters.ts    # Currency/number formatting
+│   └── usePriceUpdates.ts  # Price polling
 ├── pages/               # Route pages
-│   ├── alerts.vue
-│   ├── coin/[id].vue
-│   ├── index.vue
-│   ├── markets.vue
-│   └── portfolio.vue
 ├── stores/              # Pinia stores
-│   ├── alerts.ts
-│   ├── coins.ts
-│   └── portfolio.ts
-├── types/               # TypeScript interfaces
-│   └── index.ts
-└── app.vue              # Root layout
+└── types/               # TypeScript interfaces
 
 server/
-└── api/coins/           # API routes
+└── api/coins/           # API proxy routes
     ├── [id]/history.get.ts
     ├── [id].get.ts
     ├── index.get.ts
     └── prices.get.ts
 ```
+
+---
 
 ## Getting Started
 
@@ -132,53 +181,59 @@ npm run dev
 
 ### Environment Variables
 
-Create a `.env` file in the root:
+Create a `.env` file:
 
 ```env
 COINGECKO_API_KEY=your_api_key_here
 ```
 
+---
+
 ## Pages Overview
 
-| Page        | Route        | Description                                    |
-| ----------- | ------------ | ---------------------------------------------- |
-| Dashboard   | `/`          | Portfolio summary, market overview, top movers |
-| Markets     | `/markets`   | Searchable list of all cryptocurrencies        |
-| Coin Detail | `/coin/:id`  | Price chart, stats, add to portfolio/alerts    |
-| Portfolio   | `/portfolio` | Manage holdings, view P/L                      |
-| Alerts      | `/alerts`    | Create and manage price alerts                 |
+| Page        | Route        | Description                          |
+| ----------- | ------------ | ------------------------------------ |
+| Dashboard   | `/`          | Portfolio summary, market overview   |
+| Markets     | `/markets`   | Searchable cryptocurrency list       |
+| Coin Detail | `/coin/:id`  | Price chart, stats, add to portfolio |
+| Portfolio   | `/portfolio` | Manage holdings, view P/L            |
+| Alerts      | `/alerts`    | Price alert management               |
 
-## Key Features Implementation
+---
+
+## Key Implementations
 
 ### Real-time Price Updates
 
-The `usePriceUpdates` composable provides automatic price refresh:
-
-- Polls CoinGecko every 30 seconds
-- Updates coin store, portfolio values, and checks alerts
-- Auto-starts on mount, auto-stops on unmount
+```typescript
+// usePriceUpdates.ts
+const startUpdates = () => {
+  intervalId = window.setInterval(async () => {
+    await coinsStore.updatePrices();
+    portfolioStore.updateValues(coinsStore.coins);
+    alertsStore.checkAlerts(coinsStore.coins);
+  }, 30000); // 30 seconds
+};
+```
 
 ### Profit/Loss Calculation
 
-Portfolio store calculates in real-time:
+```typescript
+// Portfolio store
+currentValue = amount × currentPrice
+cost = amount × buyPrice
+profitLoss = currentValue - cost
+profitLossPercentage = (profitLoss / cost) × 100
+```
 
-- Current value = Amount × Current Price
-- Cost = Amount × Buy Price
-- P/L = Current Value - Cost
-- P/L % = (P/L / Cost) × 100
-
-### Price Alerts
-
-Alert system with browser notifications:
-
-- Set target price with direction (above/below)
-- Background checking on price updates
-- Browser Notification API for alerts
-- Persisted to localStorage
+---
 
 ## Performance Considerations
 
-- **Lazy components**: Charts only render when visible
-- **Virtual scrolling**: Consider for large coin lists
-- **Debounced search**: 300ms delay on input
-- **Canvas charts**: Better performance than SVG for real-time
+- **Lazy chart loading** - Charts render only when visible
+- **Debounced search** - 300ms delay on input
+- **Canvas charts** - Better performance than SVG
+- **Minimal re-renders** - Computed properties for derived data
+
+---
+

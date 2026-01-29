@@ -92,7 +92,8 @@ const props = defineProps<{
 const colorMode = useColorMode();
 const { formatCurrency, formatPercentage } = useFormatters();
 
-const timeRanges: TimeRange[] = ["1D", "7D", "1M", "3M", "1Y", "ALL"];
+// Note: Removed "ALL" as CoinGecko free tier max is 365 days (same as 1Y)
+const timeRanges: TimeRange[] = ["1D", "7D", "1M", "3M", "1Y"];
 const selectedRange = ref<TimeRange>("7D");
 const loading = ref(false);
 const error = ref<string | null>(null);

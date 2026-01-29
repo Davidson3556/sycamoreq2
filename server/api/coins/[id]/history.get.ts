@@ -10,14 +10,13 @@ export default defineEventHandler(async (event) => {
     })
   }
   
-  // Map time range to days
-  const rangeMap: Record<string, number | string> = {
+  const rangeMap: Record<string, number> = {
     '1D': 1,
     '7D': 7,
     '1M': 30,
     '3M': 90,
     '1Y': 365,
-    'ALL': 'max'
+    'ALL': 365  
   }
   
   const range = (query.range as string) || '7D'
