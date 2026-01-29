@@ -18,24 +18,27 @@
           <div class="flex items-center gap-4">
             <NuxtLink
               to="/markets"
-              class="p-2 rounded-lg hover:bg-white/5 transition-colors"
+              class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
             >
               <UIcon
                 name="i-heroicons-arrow-left"
-                class="w-5 h-5 text-gray-400"
+                class="w-5 h-5 text-gray-500 dark:text-gray-400"
               />
             </NuxtLink>
+
             <img
               :src="coin.image?.large"
               :alt="coin.name"
               class="w-12 h-12 rounded-full"
             />
             <div>
-              <h1 class="text-3xl font-bold text-white">{{ coin.name }}</h1>
+              <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+                {{ coin.name }}
+              </h1>
               <p class="text-gray-500 uppercase">{{ coin.symbol }}</p>
             </div>
             <span
-              class="px-2 py-1 bg-gray-800 rounded-lg text-sm text-gray-400"
+              class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm text-gray-600 dark:text-gray-400"
             >
               Rank #{{ coin.market_cap_rank }}
             </span>
@@ -62,10 +65,10 @@
 
         <div class="grid md:grid-cols-3 gap-6 mb-8">
           <div
-            class="md:col-span-2 bg-gray-900/50 backdrop-blur-sm border border-white/5 rounded-2xl p-6"
+            class="md:col-span-2 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-2xl p-6"
           >
             <div class="flex items-end gap-4 mb-4">
-              <p class="text-4xl font-bold text-white">
+              <p class="text-4xl font-bold text-gray-900 dark:text-white">
                 {{ formatCurrency(coin.market_data?.current_price?.usd || 0) }}
               </p>
               <span
@@ -78,19 +81,19 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
                 <p class="text-xs text-gray-500">24h High</p>
-                <p class="font-medium text-white">
+                <p class="font-medium text-gray-900 dark:text-white">
                   {{ formatCurrency(coin.market_data?.high_24h?.usd || 0) }}
                 </p>
               </div>
               <div>
                 <p class="text-xs text-gray-500">24h Low</p>
-                <p class="font-medium text-white">
+                <p class="font-medium text-gray-900 dark:text-white">
                   {{ formatCurrency(coin.market_data?.low_24h?.usd || 0) }}
                 </p>
               </div>
               <div>
                 <p class="text-xs text-gray-500">Market Cap</p>
-                <p class="font-medium text-white">
+                <p class="font-medium text-gray-900 dark:text-white">
                   {{
                     formatCompactNumber(coin.market_data?.market_cap?.usd || 0)
                   }}
@@ -98,7 +101,7 @@
               </div>
               <div>
                 <p class="text-xs text-gray-500">Volume (24h)</p>
-                <p class="font-medium text-white">
+                <p class="font-medium text-gray-900 dark:text-white">
                   {{
                     formatCompactNumber(
                       coin.market_data?.total_volume?.usd || 0,
@@ -110,31 +113,33 @@
           </div>
 
           <div
-            class="bg-gray-900/50 backdrop-blur-sm border border-white/5 rounded-2xl p-6"
+            class="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-2xl p-6"
           >
-            <h3 class="font-semibold text-white mb-4">Statistics</h3>
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-4">
+              Statistics
+            </h3>
             <div class="space-y-3">
               <div class="flex justify-between">
                 <span class="text-gray-500">All-Time High</span>
-                <span class="text-white">{{
+                <span class="text-gray-900 dark:text-white">{{
                   formatCurrency(coin.market_data?.ath?.usd || 0)
                 }}</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-500">All-Time Low</span>
-                <span class="text-white">{{
+                <span class="text-gray-900 dark:text-white">{{
                   formatCurrency(coin.market_data?.atl?.usd || 0)
                 }}</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-500">Circulating Supply</span>
-                <span class="text-white">{{
+                <span class="text-gray-900 dark:text-white">{{
                   formatCompactNumber(coin.market_data?.circulating_supply || 0)
                 }}</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-500">Total Supply</span>
-                <span class="text-white">
+                <span class="text-gray-900 dark:text-white">
                   {{
                     coin.market_data?.total_supply
                       ? formatCompactNumber(coin.market_data.total_supply)
@@ -150,11 +155,13 @@
 
         <div
           v-if="coin.description?.en"
-          class="mt-8 bg-gray-900/50 backdrop-blur-sm border border-white/5 rounded-2xl p-6"
+          class="mt-8 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-2xl p-6"
         >
-          <h3 class="font-semibold text-white mb-4">About {{ coin.name }}</h3>
+          <h3 class="font-semibold text-gray-900 dark:text-white mb-4">
+            About {{ coin.name }}
+          </h3>
           <div
-            class="text-gray-400 text-sm leading-relaxed prose prose-invert max-w-none"
+            class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed prose prose-gray dark:prose-invert max-w-none"
             v-html="truncatedDescription"
           ></div>
           <button

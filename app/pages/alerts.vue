@@ -5,7 +5,9 @@
         class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
       >
         <div>
-          <h1 class="text-3xl font-bold text-white">Price Alerts</h1>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+            Price Alerts
+          </h1>
           <p class="text-gray-500 mt-1">
             Get notified when prices hit your targets
           </p>
@@ -35,36 +37,36 @@
         class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
       >
         <div
-          class="bg-gray-900/50 backdrop-blur-sm border border-white/5 rounded-xl p-4"
+          class="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-xl p-4 transition-colors"
         >
           <p class="text-xs text-gray-500 mb-1">Total Alerts</p>
-          <p class="text-2xl font-bold text-white">
+          <p class="text-2xl font-bold text-gray-900 dark:text-white">
             {{ alertsStore.alertCount }}
           </p>
         </div>
         <div
-          class="bg-gray-900/50 backdrop-blur-sm border border-white/5 rounded-xl p-4"
+          class="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-xl p-4 transition-colors"
         >
           <p class="text-xs text-gray-500 mb-1">Active</p>
-          <p class="text-2xl font-bold text-emerald-400">
+          <p class="text-2xl font-bold text-emerald-500">
             {{ alertsStore.activeAlertCount }}
           </p>
         </div>
         <div
-          class="bg-gray-900/50 backdrop-blur-sm border border-white/5 rounded-xl p-4"
+          class="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-xl p-4 transition-colors"
         >
           <p class="text-xs text-gray-500 mb-1">Triggered</p>
-          <p class="text-2xl font-bold text-yellow-400">
+          <p class="text-2xl font-bold text-yellow-500">
             {{ alertsStore.triggeredAlerts.length }}
           </p>
         </div>
         <div
-          class="bg-gray-900/50 backdrop-blur-sm border border-white/5 rounded-xl p-4"
+          class="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-xl p-4 transition-colors"
         >
           <p class="text-xs text-gray-500 mb-1">Notifications</p>
           <p
             class="text-2xl font-bold"
-            :class="notificationsEnabled ? 'text-emerald-400' : 'text-gray-500'"
+            :class="notificationsEnabled ? 'text-emerald-500' : 'text-gray-500'"
           >
             {{ notificationsEnabled ? "On" : "Off" }}
           </p>
@@ -73,11 +75,11 @@
 
       <template v-if="alertsStore.triggeredAlerts.length > 0">
         <h2
-          class="text-xl font-semibold text-white mb-4 flex items-center gap-2"
+          class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2"
         >
           <UIcon
             name="i-heroicons-bell-alert"
-            class="w-5 h-5 text-yellow-400"
+            class="w-5 h-5 text-yellow-500"
           />
           Triggered Alerts
         </h2>
@@ -94,7 +96,9 @@
       </template>
 
       <template v-if="alertsStore.activeAlerts.length > 0">
-        <h2 class="text-xl font-semibold text-white mb-4">Active Alerts</h2>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          Active Alerts
+        </h2>
         <div class="space-y-4 mb-8">
           <AlertCard
             v-for="alert in alertsStore.activeAlerts"
@@ -140,7 +144,7 @@
 
       <div
         v-if="alertsStore.alertCount > 0"
-        class="mt-8 pt-8 border-t border-white/5"
+        class="mt-8 pt-8 border-t border-gray-200 dark:border-white/5"
       >
         <UButton
           variant="ghost"

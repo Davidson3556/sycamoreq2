@@ -1,10 +1,12 @@
 <template>
   <div
-    class="bg-gray-900/50 backdrop-blur-sm border border-white/5 rounded-2xl p-6"
+    class="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-2xl p-6 transition-colors duration-300"
   >
     <div class="flex items-center justify-between mb-6">
-      <h3 class="text-lg font-semibold text-white">Price Chart</h3>
-      <div class="flex gap-1 bg-gray-800/50 rounded-lg p-1">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+        Price Chart
+      </h3>
+      <div class="flex gap-1 bg-gray-100 dark:bg-gray-800/50 rounded-lg p-1">
         <button
           v-for="range in timeRanges"
           :key="range"
@@ -12,7 +14,7 @@
             'px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200',
             selectedRange === range
               ? 'bg-emerald-500 text-white'
-              : 'text-gray-400 hover:text-white',
+              : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-800',
           ]"
           @click="selectRange(range)"
         >
@@ -30,26 +32,46 @@
         show-retry
         @retry="fetchData"
       />
-      <canvas v-else ref="canvasRef"></canvas>
+      <EmptyState
+        v-else-if="!chartData.length"
+        message="No price data available for this range"
+      />
+      <div v-else class="w-full h-full">
+        <canvas ref="canvasRef" class="w-full h-full"></canvas>
+      </div>
     </div>
 
     <div
       v-if="!loading && !error && chartData.length"
       class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4"
     >
-      <div class="bg-gray-800/30 rounded-xl p-3">
+      <div
+        class="bg-gray-50 dark:bg-gray-800/30 rounded-xl p-3 transition-colors"
+      >
         <p class="text-xs text-gray-500 mb-1">High</p>
-        <p class="font-semibold text-white">{{ formatCurrency(stats.high) }}</p>
+        <p class="font-semibold text-gray-900 dark:text-white">
+          {{ formatCurrency(stats.high) }}
+        </p>
       </div>
-      <div class="bg-gray-800/30 rounded-xl p-3">
+      <div
+        class="bg-gray-50 dark:bg-gray-800/30 rounded-xl p-3 transition-colors"
+      >
         <p class="text-xs text-gray-500 mb-1">Low</p>
-        <p class="font-semibold text-white">{{ formatCurrency(stats.low) }}</p>
+        <p class="font-semibold text-gray-900 dark:text-white">
+          {{ formatCurrency(stats.low) }}
+        </p>
       </div>
-      <div class="bg-gray-800/30 rounded-xl p-3">
+      <div
+        class="bg-gray-50 dark:bg-gray-800/30 rounded-xl p-3 transition-colors"
+      >
         <p class="text-xs text-gray-500 mb-1">Average</p>
-        <p class="font-semibold text-white">{{ formatCurrency(stats.avg) }}</p>
+        <p class="font-semibold text-gray-900 dark:text-white">
+          {{ formatCurrency(stats.avg) }}
+        </p>
       </div>
-      <div class="bg-gray-800/30 rounded-xl p-3">
+      <div
+        class="bg-gray-50 dark:bg-gray-800/30 rounded-xl p-3 transition-colors"
+      >
         <p class="text-xs text-gray-500 mb-1">Change</p>
         <p :class="changeColor" class="font-semibold">
           {{ formatPercentage(stats.change) }}
@@ -60,32 +82,14 @@
 </template>
 
 <script setup lang="ts">
-import {
-  Chart,
-  LineController,
-  LineElement,
-  PointElement,
-  LinearScale,
-  TimeScale,
-  Tooltip,
-  Filler,
-} from "chart.js";
 import type { TimeRange } from "~/types";
-
-Chart.register(
-  LineController,
-  LineElement,
-  PointElement,
-  LinearScale,
-  TimeScale,
-  Tooltip,
-  Filler,
-);
+import type { Chart as ChartType } from "chart.js";
 
 const props = defineProps<{
   coinId: string;
 }>();
 
+const colorMode = useColorMode();
 const { formatCurrency, formatPercentage } = useFormatters();
 
 const timeRanges: TimeRange[] = ["1D", "7D", "1M", "3M", "1Y", "ALL"];
@@ -94,7 +98,8 @@ const loading = ref(false);
 const error = ref<string | null>(null);
 const chartData = ref<{ timestamp: number; price: number }[]>([]);
 const canvasRef = ref<HTMLCanvasElement | null>(null);
-let chart: Chart | null = null;
+let chart: ChartType | null = null;
+let ChartJS: typeof import("chart.js/auto").default | null = null;
 
 const stats = computed(() => {
   if (!chartData.value.length) return { high: 0, low: 0, avg: 0, change: 0 };
@@ -130,12 +135,16 @@ const fetchData = async () => {
       timestamp,
       price,
     }));
-    await nextTick();
-    createChart();
   } catch (e: any) {
     error.value = e.message || "Failed to load chart data";
   } finally {
     loading.value = false;
+    await nextTick();
+    setTimeout(() => {
+      if (chartData.value.length && !error.value) {
+        createChart();
+      }
+    }, 100);
   }
 };
 
@@ -144,15 +153,27 @@ const selectRange = (range: TimeRange) => {
   fetchData();
 };
 
-const createChart = () => {
+const createChart = async () => {
   if (!canvasRef.value || !chartData.value.length) return;
+
+  if (!ChartJS) {
+    const module = await import("chart.js/auto");
+    ChartJS = module.default;
+  }
 
   if (chart) {
     chart.destroy();
+    chart = null;
   }
 
   const ctx = canvasRef.value.getContext("2d");
   if (!ctx) return;
+
+  const parent = canvasRef.value.parentElement;
+  if (parent) {
+    canvasRef.value.style.width = "100%";
+    canvasRef.value.style.height = "100%";
+  }
 
   const isPositive = stats.value.change >= 0;
   const color = isPositive ? "#10b981" : "#ef4444";
@@ -163,7 +184,7 @@ const createChart = () => {
   );
   gradient.addColorStop(1, "transparent");
 
-  chart = new Chart(ctx, {
+  chart = new ChartJS(ctx, {
     type: "line",
     data: {
       labels: chartData.value.map((d) =>
@@ -212,15 +233,19 @@ const createChart = () => {
       },
       scales: {
         x: {
+          type: "category",
           display: false,
         },
         y: {
           display: true,
           grid: {
-            color: "rgba(255, 255, 255, 0.05)",
+            color:
+              colorMode.value === "dark"
+                ? "rgba(255, 255, 255, 0.05)"
+                : "rgba(0, 0, 0, 0.08)",
           },
           ticks: {
-            color: "#6b7280",
+            color: colorMode.value === "dark" ? "#9ca3af" : "#6b7280",
             callback: (value) => `$${Number(value).toLocaleString()}`,
           },
         },
@@ -247,6 +272,16 @@ onMounted(() => {
 onUnmounted(() => {
   if (chart) {
     chart.destroy();
+    chart = null;
   }
 });
+
+watch(
+  () => colorMode.value,
+  () => {
+    if (chartData.value.length) {
+      createChart();
+    }
+  },
+);
 </script>

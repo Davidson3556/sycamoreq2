@@ -1,14 +1,18 @@
 <template>
   <div
-    class="bg-gradient-to-br from-gray-900/80 to-gray-900/40 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8"
+    class="bg-white/50 dark:bg-gradient-to-br dark:from-gray-900/80 dark:to-gray-900/40 backdrop-blur-xl border border-gray-200 dark:border-white/5 rounded-3xl p-6 md:p-8 transition-colors duration-300"
   >
-    <h2 class="text-lg font-semibold text-gray-400 mb-6">Portfolio Value</h2>
+    <h2 class="text-lg font-semibold text-gray-500 dark:text-gray-400 mb-6">
+      Portfolio Value
+    </h2>
 
     <div
       class="flex flex-col md:flex-row md:items-end md:justify-between gap-6"
     >
       <div>
-        <p class="text-4xl md:text-5xl font-bold text-white tracking-tight">
+        <p
+          class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight"
+        >
           {{ formatCurrency(summary.totalValue) }}
         </p>
         <div class="flex items-center gap-3 mt-3">
@@ -38,15 +42,19 @@
       </div>
 
       <div class="grid grid-cols-2 gap-4">
-        <div class="bg-gray-800/30 rounded-xl p-4">
+        <div
+          class="bg-gray-100 dark:bg-gray-800/30 rounded-xl p-4 transition-colors"
+        >
           <p class="text-xs text-gray-500 mb-1">Total Cost</p>
-          <p class="text-lg font-semibold text-white">
+          <p class="text-lg font-semibold text-gray-900 dark:text-white">
             {{ formatCurrency(summary.totalCost) }}
           </p>
         </div>
-        <div class="bg-gray-800/30 rounded-xl p-4">
+        <div
+          class="bg-gray-100 dark:bg-gray-800/30 rounded-xl p-4 transition-colors"
+        >
           <p class="text-xs text-gray-500 mb-1">Holdings</p>
-          <p class="text-lg font-semibold text-white">
+          <p class="text-lg font-semibold text-gray-900 dark:text-white">
             {{ holdingCount }} coins
           </p>
         </div>

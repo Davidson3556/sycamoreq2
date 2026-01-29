@@ -8,7 +8,9 @@
         class="w-8 h-8 text-red-400"
       />
     </div>
-    <h3 class="text-lg font-semibold text-white mb-2">{{ title }}</h3>
+    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+      {{ title }}
+    </h3>
     <p class="text-gray-500 text-sm max-w-md mb-6">{{ message }}</p>
     <UButton
       v-if="showRetry"

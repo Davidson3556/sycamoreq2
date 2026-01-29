@@ -5,24 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  Chart,
-  LineController,
-  LineElement,
-  PointElement,
-  LinearScale,
-  CategoryScale,
-  Filler,
-} from "chart.js";
-
-Chart.register(
-  LineController,
-  LineElement,
-  PointElement,
-  LinearScale,
-  CategoryScale,
-  Filler,
-);
+import type { Chart as ChartType } from "chart.js";
 
 const props = defineProps<{
   data: number[];
@@ -30,13 +13,20 @@ const props = defineProps<{
 }>();
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
-let chart: Chart | null = null;
+let chart: ChartType | null = null;
+let ChartJS: typeof import("chart.js/auto").default | null = null;
 
-const createChart = () => {
+const createChart = async () => {
   if (!canvasRef.value || !props.data.length) return;
+
+  if (!ChartJS) {
+    const module = await import("chart.js/auto");
+    ChartJS = module.default;
+  }
 
   if (chart) {
     chart.destroy();
+    chart = null;
   }
 
   const ctx = canvasRef.value.getContext("2d");
@@ -50,7 +40,7 @@ const createChart = () => {
   );
   gradient.addColorStop(1, "transparent");
 
-  chart = new Chart(ctx, {
+  chart = new ChartJS(ctx, {
     type: "line",
     data: {
       labels: props.data.map((_, i) => i.toString()),
@@ -87,7 +77,9 @@ const createChart = () => {
 };
 
 onMounted(() => {
-  createChart();
+  setTimeout(() => {
+    createChart();
+  }, 50);
 });
 
 watch(
@@ -101,6 +93,7 @@ watch(
 onUnmounted(() => {
   if (chart) {
     chart.destroy();
+    chart = null;
   }
 });
 </script>

@@ -1,11 +1,11 @@
 <template>
   <NuxtLink
     :to="`/coin/${coin.id}`"
-    class="group block bg-gray-900/50 backdrop-blur-sm border border-white/5 rounded-2xl p-4 hover:bg-gray-900/80 hover:border-emerald-500/20 transition-all duration-300"
+    class="group block bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-2xl p-4 hover:bg-gray-100 dark:hover:bg-gray-900/80 hover:border-emerald-500/20 transition-all duration-300"
   >
     <div class="flex items-center gap-4">
       <div class="flex items-center gap-3">
-        <span class="text-xs text-gray-600 w-6 text-center">{{
+        <span class="text-xs text-gray-500 w-6 text-center">{{
           coin.rank
         }}</span>
         <img
@@ -17,7 +17,7 @@
 
       <div class="flex-1 min-w-0">
         <h3
-          class="font-semibold text-white truncate group-hover:text-emerald-400 transition-colors"
+          class="font-semibold text-gray-900 dark:text-white truncate group-hover:text-emerald-500 transition-colors"
         >
           {{ coin.name }}
         </h3>
@@ -35,7 +35,9 @@
       </div>
 
       <div class="text-right">
-        <p class="font-semibold text-white">{{ formatCurrency(coin.price) }}</p>
+        <p class="font-semibold text-gray-900 dark:text-white">
+          {{ formatCurrency(coin.price) }}
+        </p>
         <p
           :class="change.class"
           class="text-sm font-medium flex items-center justify-end gap-1"

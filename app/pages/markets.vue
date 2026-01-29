@@ -5,7 +5,9 @@
         class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
       >
         <div>
-          <h1 class="text-3xl font-bold text-white">Markets</h1>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+            Markets
+          </h1>
           <p class="text-gray-500 mt-1">
             {{ coinsStore.coins.length }} cryptocurrencies
           </p>
@@ -49,10 +51,10 @@
 
       <div
         v-else
-        class="bg-gray-900/50 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden"
+        class="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-2xl overflow-hidden transition-colors"
       >
         <div
-          class="hidden md:grid grid-cols-12 gap-4 px-6 py-4 text-sm font-medium text-gray-500 border-b border-white/5"
+          class="hidden md:grid grid-cols-12 gap-4 px-6 py-4 text-sm font-medium text-gray-500 border-b border-gray-200 dark:border-white/5"
         >
           <div class="col-span-1">#</div>
           <div class="col-span-4">Name</div>
@@ -62,12 +64,12 @@
           <div class="col-span-1 text-right">7D</div>
         </div>
 
-        <div class="divide-y divide-white/5">
+        <div class="divide-y divide-gray-200 dark:divide-white/5">
           <NuxtLink
             v-for="coin in coinsStore.filteredCoins"
             :key="coin.id"
             :to="`/coin/${coin.id}`"
-            class="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-white/5 transition-colors"
+            class="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
           >
             <div class="col-span-1 text-gray-500 text-sm">{{ coin.rank }}</div>
 
@@ -78,14 +80,15 @@
                 class="w-8 h-8 rounded-full"
               />
               <div>
-                <p class="font-medium text-white">{{ coin.name }}</p>
+                <p class="font-medium text-gray-900 dark:text-white">
+                  {{ coin.name }}
+                </p>
                 <p class="text-xs text-gray-500 uppercase">{{ coin.symbol }}</p>
               </div>
             </div>
 
-            <!-- Price -->
             <div
-              class="col-span-5 md:col-span-2 text-right font-medium text-white"
+              class="col-span-5 md:col-span-2 text-right font-medium text-gray-900 dark:text-white"
             >
               {{ formatCurrency(coin.price) }}
             </div>
@@ -93,7 +96,7 @@
             <div class="hidden md:block col-span-2 text-right">
               <span
                 :class="
-                  coin.change24h >= 0 ? 'text-emerald-400' : 'text-red-400'
+                  coin.change24h >= 0 ? 'text-emerald-500' : 'text-red-500'
                 "
                 class="font-medium"
               >
@@ -101,7 +104,7 @@
               </span>
             </div>
 
-            <div class="hidden md:block col-span-2 text-right text-gray-400">
+            <div class="hidden md:block col-span-2 text-right text-gray-500">
               {{ formatCompactNumber(coin.marketCap) }}
             </div>
 

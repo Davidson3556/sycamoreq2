@@ -1,5 +1,7 @@
 <template>
-  <footer class="bg-gray-950/50 border-t border-white/5 mt-auto">
+  <footer
+    class="bg-gray-100 dark:bg-gray-950/50 border-t border-gray-200 dark:border-white/5 mt-auto transition-colors duration-300"
+  >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div class="md:col-span-2">
@@ -18,7 +20,7 @@
               CryptoTrack
             </span>
           </div>
-          <p class="text-gray-500 text-sm max-w-md">
+          <p class="text-gray-600 dark:text-gray-500 text-sm max-w-md">
             Track your cryptocurrency portfolio with real-time prices,
             historical charts, and price alerts. Make informed investment
             decisions with comprehensive market data.
@@ -26,12 +28,14 @@
         </div>
 
         <div>
-          <h4 class="text-sm font-semibold text-white mb-4">Quick Links</h4>
+          <h4 class="text-sm font-semibold text-gray-900 dark:text-white mb-4">
+            Quick Links
+          </h4>
           <ul class="space-y-2">
             <li v-for="link in quickLinks" :key="link.to">
               <NuxtLink
                 :to="link.to"
-                class="text-sm text-gray-500 hover:text-emerald-400 transition-colors"
+                class="text-sm text-gray-600 dark:text-gray-500 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
               >
                 {{ link.label }}
               </NuxtLink>
@@ -40,14 +44,16 @@
         </div>
 
         <div>
-          <h4 class="text-sm font-semibold text-white mb-4">Resources</h4>
+          <h4 class="text-sm font-semibold text-gray-900 dark:text-white mb-4">
+            Resources
+          </h4>
           <ul class="space-y-2">
             <li v-for="link in resourceLinks" :key="link.href">
               <a
                 :href="link.href"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-sm text-gray-500 hover:text-emerald-400 transition-colors flex items-center gap-1"
+                class="text-sm text-gray-600 dark:text-gray-500 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors flex items-center gap-1"
               >
                 {{ link.label }}
                 <UIcon
@@ -61,9 +67,9 @@
       </div>
 
       <div
-        class="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4"
+        class="mt-12 pt-8 border-t border-gray-200 dark:border-white/5 flex flex-col md:flex-row items-center justify-between gap-4"
       >
-        <p class="text-sm text-gray-600">
+        <p class="text-sm text-gray-600 dark:text-gray-500">
           © {{ new Date().getFullYear() }} CryptoTrack. Data provided by
           CoinGecko.
         </p>
@@ -74,7 +80,7 @@
             :href="social.href"
             target="_blank"
             rel="noopener noreferrer"
-            class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-gray-500 hover:bg-emerald-500/10 hover:text-emerald-400 transition-all duration-200"
+            class="w-9 h-9 rounded-lg bg-gray-200 dark:bg-white/5 flex items-center justify-center text-gray-600 dark:text-gray-500 hover:bg-emerald-500/10 hover:text-emerald-500 dark:hover:text-emerald-400 transition-all duration-200"
           >
             <UIcon :name="social.icon" class="w-5 h-5" />
           </a>
