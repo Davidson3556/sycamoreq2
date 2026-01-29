@@ -16,14 +16,14 @@
 
         <div
           v-else
-          class="bg-gradient-to-br from-gray-900/80 to-gray-900/40 backdrop-blur-xl border border-white/5 rounded-3xl p-8 md:p-12 text-center"
+          class="bg-white/50 dark:bg-gradient-to-br dark:from-gray-900/80 dark:to-gray-900/40 backdrop-blur-xl border border-gray-200 dark:border-white/5 rounded-3xl p-8 md:p-12 text-center transition-colors duration-300"
         >
           <div
-            class="w-16 h-16 rounded-full bg-gray-800/50 flex items-center justify-center mx-auto mb-6"
+            class="w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800/50 flex items-center justify-center mx-auto mb-6"
           >
             <UIcon name="i-heroicons-wallet" class="w-8 h-8 text-gray-500" />
           </div>
-          <h2 class="text-2xl font-bold text-white mb-3">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
             Start Your Portfolio
           </h2>
           <p class="text-gray-500 mb-8 max-w-md mx-auto">
@@ -46,7 +46,9 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between mb-8">
           <div>
-            <h2 class="text-2xl font-bold text-white">Market Overview</h2>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+              Market Overview
+            </h2>
             <p class="text-gray-500 mt-1">Top cryptocurrencies by market cap</p>
           </div>
           <NuxtLink to="/markets">
@@ -77,27 +79,33 @@
       </div>
     </section>
 
-    <section class="py-12 bg-gray-900/30">
+    <section
+      class="py-12 bg-gray-100/50 dark:bg-gray-900/30 transition-colors duration-300"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-2xl font-bold text-white mb-8">Top Movers</h2>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">
+          Top Movers
+        </h2>
 
         <div class="grid md:grid-cols-2 gap-8">
           <div
-            class="bg-gray-900/50 backdrop-blur-sm border border-white/5 rounded-2xl p-6"
+            class="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-2xl p-6 transition-colors"
           >
             <div class="flex items-center gap-2 mb-4">
               <UIcon
                 name="i-heroicons-arrow-trending-up"
-                class="w-5 h-5 text-emerald-400"
+                class="w-5 h-5 text-emerald-500 dark:text-emerald-400"
               />
-              <h3 class="font-semibold text-white">Top Gainers</h3>
+              <h3 class="font-semibold text-gray-900 dark:text-white">
+                Top Gainers
+              </h3>
             </div>
             <div class="space-y-3">
               <NuxtLink
                 v-for="coin in coinsStore.topGainers"
                 :key="coin.id"
                 :to="`/coin/${coin.id}`"
-                class="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors"
+                class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
               >
                 <img
                   :src="coin.image"
@@ -105,12 +113,16 @@
                   class="w-8 h-8 rounded-full"
                 />
                 <div class="flex-1">
-                  <p class="text-sm font-medium text-white">{{ coin.name }}</p>
+                  <p class="text-sm font-medium text-gray-900 dark:text-white">
+                    {{ coin.name }}
+                  </p>
                   <p class="text-xs text-gray-500 uppercase">
                     {{ coin.symbol }}
                   </p>
                 </div>
-                <span class="text-sm font-medium text-emerald-400">
+                <span
+                  class="text-sm font-medium text-emerald-500 dark:text-emerald-400"
+                >
                   {{ formatPercentage(coin.change24h) }}
                 </span>
               </NuxtLink>
@@ -118,21 +130,23 @@
           </div>
 
           <div
-            class="bg-gray-900/50 backdrop-blur-sm border border-white/5 rounded-2xl p-6"
+            class="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-white/5 rounded-2xl p-6 transition-colors"
           >
             <div class="flex items-center gap-2 mb-4">
               <UIcon
                 name="i-heroicons-arrow-trending-down"
-                class="w-5 h-5 text-red-400"
+                class="w-5 h-5 text-red-500 dark:text-red-400"
               />
-              <h3 class="font-semibold text-white">Top Losers</h3>
+              <h3 class="font-semibold text-gray-900 dark:text-white">
+                Top Losers
+              </h3>
             </div>
             <div class="space-y-3">
               <NuxtLink
                 v-for="coin in coinsStore.topLosers"
                 :key="coin.id"
                 :to="`/coin/${coin.id}`"
-                class="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors"
+                class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
               >
                 <img
                   :src="coin.image"
@@ -140,12 +154,16 @@
                   class="w-8 h-8 rounded-full"
                 />
                 <div class="flex-1">
-                  <p class="text-sm font-medium text-white">{{ coin.name }}</p>
+                  <p class="text-sm font-medium text-gray-900 dark:text-white">
+                    {{ coin.name }}
+                  </p>
                   <p class="text-xs text-gray-500 uppercase">
                     {{ coin.symbol }}
                   </p>
                 </div>
-                <span class="text-sm font-medium text-red-400">
+                <span
+                  class="text-sm font-medium text-red-500 dark:text-red-400"
+                >
                   {{ formatPercentage(coin.change24h) }}
                 </span>
               </NuxtLink>

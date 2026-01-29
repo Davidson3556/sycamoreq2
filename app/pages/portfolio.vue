@@ -5,7 +5,9 @@
         class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
       >
         <div>
-          <h1 class="text-3xl font-bold text-white">Portfolio</h1>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+            Portfolio
+          </h1>
           <p class="text-gray-500 mt-1">Manage your cryptocurrency holdings</p>
         </div>
         <UButton
@@ -27,7 +29,9 @@
       />
 
       <template v-if="portfolioStore.holdingCount > 0">
-        <h2 class="text-xl font-semibold text-white mb-4">Your Holdings</h2>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          Your Holdings
+        </h2>
         <div class="space-y-4">
           <HoldingCard
             v-for="holding in portfolioStore.holdingsWithValues"
@@ -38,7 +42,7 @@
           />
         </div>
 
-        <div class="mt-8 pt-8 border-t border-white/5">
+        <div class="mt-8 pt-8 border-t border-gray-200 dark:border-white/5">
           <UButton
             variant="ghost"
             color="error"
@@ -67,7 +71,6 @@
         </template>
       </EmptyState>
 
-      <!-- Add/Edit Modal -->
       <AddHoldingModal
         v-model:open="showAddModal"
         :edit-holding="editingHolding"
@@ -86,7 +89,7 @@
                 class="w-8 h-8 text-red-400"
               />
             </div>
-            <h3 class="text-xl font-bold text-white mb-2">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
               Clear All Holdings?
             </h3>
             <p class="text-gray-500 mb-6">

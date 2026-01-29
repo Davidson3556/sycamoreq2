@@ -2,14 +2,14 @@
   <UModal v-model:open="isOpen">
     <template #content>
       <div class="p-6">
-        <h2 class="text-xl font-bold text-white mb-6">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">
           {{ editHolding ? "Edit Holding" : "Add New Holding" }}
         </h2>
 
         <form @submit.prevent="handleSubmit" class="space-y-5">
-          <!-- Coin Search -->
           <div>
-            <label class="block text-sm font-medium text-gray-400 mb-2"
+            <label
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2"
               >Coin</label
             >
             <UInput
@@ -20,16 +20,15 @@
               @input="handleSearch"
             />
 
-            <!-- Search Results -->
             <div
               v-if="searchResults.length && !selectedCoin && !editHolding"
-              class="mt-2 bg-gray-800 rounded-lg border border-white/10 max-h-48 overflow-y-auto"
+              class="mt-2 bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-white/10 max-h-48 overflow-y-auto"
             >
               <button
                 v-for="coin in searchResults"
                 :key="coin.id"
                 type="button"
-                class="w-full flex items-center gap-3 p-3 hover:bg-gray-700/50 transition-colors"
+                class="w-full flex items-center gap-3 p-3 hover:bg-gray-200 dark:hover:bg-gray-700/50 transition-colors"
                 @click="selectCoin(coin)"
               >
                 <img
@@ -38,7 +37,9 @@
                   class="w-8 h-8 rounded-full"
                 />
                 <div class="text-left">
-                  <p class="text-sm font-medium text-white">{{ coin.name }}</p>
+                  <p class="text-sm font-medium text-gray-900 dark:text-white">
+                    {{ coin.name }}
+                  </p>
                   <p class="text-xs text-gray-500 uppercase">
                     {{ coin.symbol }}
                   </p>
@@ -49,10 +50,9 @@
               </button>
             </div>
 
-            <!-- Selected Coin Display -->
             <div
               v-if="selectedCoin || editHolding"
-              class="mt-2 flex items-center gap-3 p-3 bg-gray-800 rounded-lg"
+              class="mt-2 flex items-center gap-3 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg"
             >
               <img
                 :src="selectedCoin?.image || editHolding?.coinImage"
@@ -60,7 +60,7 @@
                 class="w-8 h-8 rounded-full"
               />
               <div>
-                <p class="text-sm font-medium text-white">
+                <p class="text-sm font-medium text-gray-900 dark:text-white">
                   {{ selectedCoin?.name || editHolding?.coinName }}
                 </p>
                 <p class="text-xs text-gray-500 uppercase">
@@ -79,9 +79,9 @@
             </div>
           </div>
 
-          <!-- Amount -->
           <div>
-            <label class="block text-sm font-medium text-gray-400 mb-2"
+            <label
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2"
               >Amount</label
             >
             <UInput
@@ -94,9 +94,9 @@
             />
           </div>
 
-          <!-- Buy Price -->
           <div>
-            <label class="block text-sm font-medium text-gray-400 mb-2"
+            <label
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2"
               >Buy Price (USD)</label
             >
             <UInput
@@ -112,15 +112,14 @@
             </p>
           </div>
 
-          <!-- Buy Date -->
           <div>
-            <label class="block text-sm font-medium text-gray-400 mb-2"
+            <label
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2"
               >Buy Date</label
             >
             <UInput v-model="form.buyDate" type="date" required />
           </div>
 
-          <!-- Actions -->
           <div class="flex gap-3 pt-4">
             <UButton
               type="button"
@@ -246,7 +245,6 @@ const close = () => {
   emit("close");
 };
 
-// Initialize form for edit mode
 watch(
   () => props.editHolding,
   (holding) => {

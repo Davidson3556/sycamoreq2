@@ -2,11 +2,14 @@
   <UModal v-model:open="isOpen">
     <template #content>
       <div class="p-6">
-        <h2 class="text-xl font-bold text-white mb-6">Create Price Alert</h2>
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">
+          Create Price Alert
+        </h2>
 
         <form @submit.prevent="handleSubmit" class="space-y-5">
           <div>
-            <label class="block text-sm font-medium text-gray-400 mb-2"
+            <label
+              class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2"
               >Coin</label
             >
             <UInput
@@ -18,13 +21,13 @@
 
             <div
               v-if="searchResults.length && !selectedCoin"
-              class="mt-2 bg-gray-800 rounded-lg border border-white/10 max-h-48 overflow-y-auto"
+              class="mt-2 bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-white/10 max-h-48 overflow-y-auto"
             >
               <button
                 v-for="coin in searchResults"
                 :key="coin.id"
                 type="button"
-                class="w-full flex items-center gap-3 p-3 hover:bg-gray-700/50 transition-colors"
+                class="w-full flex items-center gap-3 p-3 hover:bg-gray-200 dark:hover:bg-gray-700/50 transition-colors"
                 @click="selectCoin(coin)"
               >
                 <img
@@ -33,20 +36,23 @@
                   class="w-8 h-8 rounded-full"
                 />
                 <div class="text-left">
-                  <p class="text-sm font-medium text-white">{{ coin.name }}</p>
+                  <p class="text-sm font-medium text-gray-900 dark:text-white">
+                    {{ coin.name }}
+                  </p>
                   <p class="text-xs text-gray-500 uppercase">
                     {{ coin.symbol }}
                   </p>
                 </div>
-                <span class="ml-auto text-sm text-gray-400">{{
-                  formatCurrency(coin.price)
-                }}</span>
+                <span
+                  class="ml-auto text-sm text-gray-600 dark:text-gray-400"
+                  >{{ formatCurrency(coin.price) }}</span
+                >
               </button>
             </div>
 
             <div
               v-if="selectedCoin"
-              class="mt-2 flex items-center gap-3 p-3 bg-gray-800 rounded-lg"
+              class="mt-2 flex items-center gap-3 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg"
             >
               <img
                 :src="selectedCoin.image"
@@ -54,7 +60,7 @@
                 class="w-8 h-8 rounded-full"
               />
               <div>
-                <p class="text-sm font-medium text-white">
+                <p class="text-sm font-medium text-gray-900 dark:text-white">
                   {{ selectedCoin.name }}
                 </p>
                 <p class="text-xs text-gray-500">
@@ -72,9 +78,9 @@
             </div>
           </div>
 
-          <!-- Direction -->
           <div>
-            <label class="block text-sm font-medium text-gray-400 mb-2"
+            <label
+              class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2"
               >Alert When Price Goes</label
             >
             <div class="grid grid-cols-2 gap-3">
@@ -83,8 +89,8 @@
                 :class="[
                   'flex items-center justify-center gap-2 p-3 rounded-xl border transition-all duration-200',
                   form.direction === 'above'
-                    ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400'
-                    : 'bg-gray-800/50 border-white/10 text-gray-400 hover:text-white',
+                    ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400'
+                    : 'bg-gray-100 dark:bg-gray-800/50 border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white',
                 ]"
                 @click="form.direction = 'above'"
               >
@@ -96,8 +102,8 @@
                 :class="[
                   'flex items-center justify-center gap-2 p-3 rounded-xl border transition-all duration-200',
                   form.direction === 'below'
-                    ? 'bg-red-500/10 border-red-500/50 text-red-400'
-                    : 'bg-gray-800/50 border-white/10 text-gray-400 hover:text-white',
+                    ? 'bg-red-500/10 border-red-500/50 text-red-600 dark:text-red-400'
+                    : 'bg-gray-100 dark:bg-gray-800/50 border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white',
                 ]"
                 @click="form.direction = 'below'"
               >
@@ -108,7 +114,8 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-400 mb-2"
+            <label
+              class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2"
               >Target Price (USD)</label
             >
             <UInput

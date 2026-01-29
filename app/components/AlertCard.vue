@@ -1,12 +1,12 @@
 <template>
   <div
     :class="[
-      'bg-gray-900/50 backdrop-blur-sm border rounded-2xl p-4 transition-all duration-300',
+      'bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border rounded-2xl p-4 transition-all duration-300',
       alert.isTriggered
-        ? 'border-yellow-500/30 bg-yellow-500/5'
+        ? 'border-yellow-500/30 bg-yellow-50 dark:bg-yellow-500/5'
         : alert.isActive
-          ? 'border-white/5 hover:border-emerald-500/20'
-          : 'border-white/5 opacity-50',
+          ? 'border-gray-200 dark:border-white/5 hover:border-emerald-500/20'
+          : 'border-gray-200 dark:border-white/5 opacity-50',
     ]"
   >
     <div class="flex items-start gap-4">
@@ -18,15 +18,17 @@
 
       <div class="flex-1 min-w-0">
         <div class="flex items-center gap-2">
-          <h3 class="font-semibold text-white">{{ alert.coinName }}</h3>
+          <h3 class="font-semibold text-gray-900 dark:text-white">
+            {{ alert.coinName }}
+          </h3>
           <span
             :class="[
               'text-xs px-2 py-0.5 rounded-full',
               alert.isTriggered
-                ? 'bg-yellow-500/20 text-yellow-400'
+                ? 'bg-yellow-500/20 text-yellow-600 dark:text-yellow-400'
                 : alert.isActive
-                  ? 'bg-emerald-500/20 text-emerald-400'
-                  : 'bg-gray-500/20 text-gray-400',
+                  ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400'
+                  : 'bg-gray-500/20 text-gray-500 dark:text-gray-400',
             ]"
           >
             {{ statusText }}
@@ -41,14 +43,16 @@
                 : 'i-heroicons-arrow-trending-down'
             "
             :class="
-              alert.direction === 'above' ? 'text-emerald-400' : 'text-red-400'
+              alert.direction === 'above'
+                ? 'text-emerald-500 dark:text-emerald-400'
+                : 'text-red-500 dark:text-red-400'
             "
             class="w-4 h-4"
           />
-          <span class="text-sm text-gray-400">
+          <span class="text-sm text-gray-600 dark:text-gray-400">
             Alert when price goes {{ alert.direction }}
           </span>
-          <span class="text-sm font-semibold text-white">{{
+          <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
             formatCurrency(alert.targetPrice)
           }}</span>
         </div>

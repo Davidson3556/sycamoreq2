@@ -1,9 +1,11 @@
 <template>
-  <div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-950">
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-gray-50 dark:bg-gray-950 transition-colors duration-300"
+  >
     <div class="text-center">
       <div class="relative inline-block">
         <div
-          class="w-20 h-20 rounded-full border-4 border-gray-800 border-t-emerald-400 animate-spin"
+          class="w-20 h-20 rounded-full border-4 border-gray-200 dark:border-gray-800 border-t-emerald-500 dark:border-t-emerald-400 animate-spin"
         ></div>
         <div class="absolute inset-0 flex items-center justify-center">
           <div
