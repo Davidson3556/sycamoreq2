@@ -4,7 +4,6 @@
   >
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <!-- Logo -->
         <NuxtLink to="/" class="flex items-center gap-2 group">
           <div
             class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center shadow-lg shadow-emerald-500/25 group-hover:shadow-emerald-500/40 transition-shadow"
@@ -29,7 +28,7 @@
             class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
             :class="[
               $route.path === link.to
-                ? 'text-gray-900 dark:text-white bg-gray-100 dark:bg-gradient-to-r dark:from-emerald-500/10 dark:to-cyan-500/10 border border-gray-200 dark:border-emerald-500/20'
+                ? 'text-gray-900 dark:text-white bg-gray-100 dark:bg-white/10 border border-gray-200 dark:border-white/10'
                 : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5',
             ]"
           >
@@ -103,7 +102,7 @@
               class="flex items-center gap-3 px-4 py-3 rounded-lg text-base font-medium transition-all duration-200"
               :class="[
                 $route.path === link.to
-                  ? 'text-gray-900 dark:text-white bg-gray-100 dark:bg-gradient-to-r dark:from-emerald-500/10 dark:to-cyan-500/10'
+                  ? 'text-gray-900 dark:text-white bg-gray-100 dark:bg-white/10'
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5',
               ]"
               @click="isMobileMenuOpen = false"
